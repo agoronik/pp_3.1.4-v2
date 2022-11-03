@@ -45,6 +45,112 @@
     </div>
 </div>
 
+
+
+<div class="modal" tabindex="-1" role="dialog" id="modal-delete">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete user</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="col-6 offset-3">
+                    <div class="form-group">
+                        <label class="col-form-label text-center font-weight-bold col">First name</label>
+                        <input type="text" class="form-control" name="d_firstName" placeholder="First name" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label text-center font-weight-bold col">Last name</label>
+                        <input type="text" class="form-control" name="d_lastName" placeholder="Last name" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label text-center font-weight-bold col">Age</label>
+                        <input type="number" class="form-control" name="d_age" placeholder="How old are your?" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label text-center font-weight-bold col">Email</label>
+                        <input type="email" class="form-control" name="d_email" placeholder="E-mail" disabled>
+                    </div>
+
+                    <div>
+                        <label class="col-form-label text-center font-weight-bold col">Role</label>
+                        <select multiple class="form-control" name="d_roles" disabled>
+                            <option th:each="role : ${allRoles}"
+                                    th:th:text="${role.name}"
+                                    th:value="${role.id}">
+                        </select>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger delete-user" >Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" id="modal-edit">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit user</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="col-6 offset-3">
+                    <div class="form-group">
+                        <label class="col-form-label text-center font-weight-bold col">First name</label>
+                        <input type="text" class="form-control" name="e_firstName" placeholder="First name" >
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label text-center font-weight-bold col">Last name</label>
+                        <input type="text" class="form-control" name="e_lastName" placeholder="Last name" >
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label text-center font-weight-bold col">Age</label>
+                        <input type="number" class="form-control" name="e_age" placeholder="How old are your?" >
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label text-center font-weight-bold col">Email</label>
+                        <input type="email" class="form-control" name="e_email" placeholder="E-mail" >
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label text-center font-weight-bold col">Password</label>
+                        <input type="password" class="form-control" name="e_password" placeholder="Password">
+                    </div>
+
+                    <div>
+                        <label class="col-form-label text-center font-weight-bold col">Role</label>
+                        <select multiple class="form-control" name="e_roles">
+                            <option th:each="role : ${allRoles}"
+                                    th:th:text="${role.name}"
+                                    th:value="${role.id}">
+                        </select>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-info edit-user" >Edit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <footer th:replace="tpl/default :: htmlfooter"/>
 
 </body>
