@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" class="h-100" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="tpl/default :: htmlhead"/>
+<body class="d-flex flex-column h-100">
+
+<nav th:replace="tpl/default :: navbar"></nav>
+
+<div class="container-fluid">
+    <div class="row">
+
+        <nav th:replace="tpl/nav :: nav(currentPage = 'user')"/>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 pt-3 mb-4">
+
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+                <h1 class="h1">User information-page</h1>
+            </div>
+
+
+            <div class="card">
+                <div class="card-header">
+                    <h3>About user</h3>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>id</th>
+                            <th class="text-nowrap">first name</th>
+                            <th class="text-nowrap">last name</th>
+                            <th>Age</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td th:text="${user.getId()}"></td>
+                                <td th:text="${user.getFirstName()}"></td>
+                                <td th:text="${user.getLastName()}"></td>
+                                <td th:text="${user.getAge()}"></td>
+                                <td th:text="${user.getEmail()}"></td>
+                                <td>
+                                    <div th:each="role: ${user.getRoles()}">
+                                        <span th:text="${role.getName()}"></span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </main>
+    </div>
+</div>
+
+<footer th:replace="tpl/default :: htmlfooter"/>
+
+</body>
+</html>

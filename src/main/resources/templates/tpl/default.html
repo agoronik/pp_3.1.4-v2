@@ -1,0 +1,189 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:fragment="htmlhead">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+</head>
+<body>
+
+<nav th:fragment="navbar" class="navbar navbar-expand-md navbar-dark bg-dark">
+    <a class="navbar-brand" th:href="@{/}">
+        <b sec:authentication="name"></b> with roles:
+        <th:block th:each="role : ${#authentication.authorities}">
+            &nbsp;<span th:text="${role.getName()}"/>
+        </th:block>
+
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+            aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/logout}">Logout</a>
+            </li>
+        </ul>-->
+    </div>
+</nav>
+
+
+<div th:fragment="usersList">
+    <div class="card">
+        <div class="card-header">
+            <h3>All users</h3>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>id</th>
+                    <th class="text-nowrap">first name</th>
+                    <th class="text-nowrap">last name</th>
+                    <th>Age</th>
+                    <th>Email</th>
+                    <th>Roles</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                <th:block th:each="user : ${users}">
+                    <tr>
+                        <td th:text="${user.getId()}"></td>
+                        <td th:text="${user.getFirstName()}"></td>
+                        <td th:text="${user.getLastName()}"></td>
+                        <td th:text="${user.getAge()}"></td>
+                        <td th:text="${user.getEmail()}"></td>
+                        <td>
+                            <div th:each="role: ${user.getRoles()}">
+                                <span th:text="${role.getName()}"></span>
+                            </div>
+                        </td>
+                        <td><a th:href="@{/admin/edit/{id}(id=${user.getId()})}" class="btn btn-info">Edit</a></td>
+                        <td><a th:href="@{/admin/delete/{id}(id=${user.getId()})}" class="btn btn-danger"><i
+                                class=""></i>Delete</a></td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="createUserForm">
+    <div class="card">
+        <div class="card-header">
+            <h3>Add new user</h3>
+        </div>
+        <div class="card-body">
+            <form th:action="@{/admin/save}" method="post" th:object="${userBlank}">
+                <div class="col-4 offset-4">
+                    <div class="form-group">
+                        <label class="col-form-label text-center font-weight-bold col">First name</label>
+                        <input type="text" class="form-control" th:field="*{firstName}" placeholder="First name">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label text-center font-weight-bold col">Last name</label>
+                        <input type="text" class="form-control" th:field="*{lastName}" placeholder="Last name">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label text-center font-weight-bold col">Age</label>
+                        <input type="number" class="form-control" th:field="*{age}" placeholder="How old are your?">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label text-center font-weight-bold col">Email</label>
+                        <input type="email" class="form-control" th:field="*{email}" placeholder="E-mail">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-form-label text-center font-weight-bold col">Password</label>
+                        <input type="password" class="form-control" th:field="*{password}" placeholder="Enter password">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-form-label text-center font-weight-bold col">Role</label>
+                        <select multiple class="form-control" name="roles">
+                            <option th:each="role : ${allRoles}"
+                                    th:text="${role.name}"
+                                    th:value="${role.id}">
+                        </select>
+                    </div>
+
+                    <div class="form-group text-center">
+                        <button type="submit" class="btn btn-success btn-lg">Add new user</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="editUserForm">
+    <div class="card">
+        <div class="card-header">
+            <h3>Edit user "[[${user.getFirstName}]]"</h3>
+        </div>
+        <div class="card-body">
+            <form th:action="@{/admin/save}" method="post" th:object="${user}">
+                <input type="hidden" th:field="*{id}">
+                <div class="col-4 offset-4">
+                    <div class="form-group">
+                        <label class="col-form-label text-center font-weight-bold col">First name</label>
+                        <input type="text" class="form-control" th:field="*{firstName}" placeholder="First name">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label text-center font-weight-bold col">Last name</label>
+                        <input type="text" class="form-control" th:field="*{lastName}" placeholder="Last name">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label text-center font-weight-bold col">Age</label>
+                        <input type="number" class="form-control" th:field="*{age}" placeholder="How old are your?">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label text-center font-weight-bold col">Email</label>
+                        <input type="email" class="form-control" th:field="*{email}" placeholder="E-mail">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-form-label text-center font-weight-bold col">Password</label>
+                        <input type="text" class="form-control" th:field="*{password}" placeholder="pass">
+                    </div>
+
+                    <div>
+                        <label class="col-form-label text-center font-weight-bold col">Role</label>
+                        <select multiple class="form-control" name="roles" th:field="*{roles}">
+                            <option th:each="role : ${allRoles}"
+                                    th:th:text="${role.name}"
+                                    th:value="${role.id}">
+                        </select>
+                    </div>
+
+                    <div class="form-group text-center d-flex justify-content-between">
+                        <a th:href="@{/admin}" class="btn btn-default btn-lg">Back to users</a>
+                        <button type="submit" class="btn btn-success btn-lg">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<footer th:fragment="htmlfooter" class="mt-auto mt-5 py-3 bg-light">
+    <div class="container-fluid ">
+        <p class="text-primary">&copy; 2017-2022 Company, Inc. &middot;
+    </div>
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</footer>
+
+
+
+</body>
+</html>
