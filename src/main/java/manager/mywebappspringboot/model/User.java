@@ -101,7 +101,6 @@ public class User implements UserDetails {
     public void setPassword(String password) {
         BCryptPasswordEncoder pw = new BCryptPasswordEncoder();
         this.password = pw.encode(password);
-        //this.password = password;
     }
 
     public Set<Role> getRoles() {

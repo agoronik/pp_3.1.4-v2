@@ -16,14 +16,12 @@ import java.util.Set;
 @Component
 public class DataLoader implements CommandLineRunner {
 
-    private BCryptPasswordEncoder passwordEncoder;
     private UserRepository userRepository;
     private RoleRepository roleRepository;
 
     public DataLoader(UserRepository userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
-        this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
     @Override
@@ -57,7 +55,7 @@ public class DataLoader implements CommandLineRunner {
             user.setLastName("Istrator");
             user.setEmail("admin@mail.ru");
             //user.setPassword("1111");
-            user.setPassword(passwordEncoder.encode("1111"));
+            user.setPassword("1111");
             user.setAge(25);
             user.setRoles(roles);
             userRepository.save(user);
