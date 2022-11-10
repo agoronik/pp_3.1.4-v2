@@ -33,10 +33,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
-    //public BCryptPasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
-        //return new BCryptPasswordEncoder();
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
@@ -44,8 +42,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService());
         authProvider.setPasswordEncoder(passwordEncoder());
-        //System.out.println("Data authProvider");
-        //System.out.println(authProvider);
         return authProvider;
     }
 
@@ -57,15 +53,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/webjars/**").permitAll();
-        //http.authorizeRequests().antMatchers("/index/**").permitAll();
+        http
+                .authorizeRequests()
+                .antMatchers("/webjars/**")
+                .permitAll();
 
         http
                 .cors().disable()
                 .csrf().disable();
 
         http.formLogin()
-                .loginPage("/login")
                 .successHandler(successUserHandler)
                 .usernameParameter("email")
                 .passwordParameter("password")
@@ -87,7 +84,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public UserDetailsService userDetailsService() {
         return (UserDetailsService) email -> {
-            //System.out.println(email);
             Optional<User> user = userService.findUserByEmail(email);
             if(user.isEmpty()) {
                 throw new UsernameNotFoundException("No user found");

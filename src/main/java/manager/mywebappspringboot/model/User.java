@@ -2,6 +2,7 @@ package manager.mywebappspringboot.model;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -32,7 +33,6 @@ public class User implements UserDetails {
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
-
 
     public User() {}
 
@@ -99,7 +99,9 @@ public class User implements UserDetails {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        BCryptPasswordEncoder pw = new BCryptPasswordEncoder();
+        this.password = pw.encode(password);
+        //this.password = password;
     }
 
     public Set<Role> getRoles() {
