@@ -51,7 +51,7 @@ $(document).on('click', 'button.modal-edit', function(){
                 $('[name="e_lastName"]').val(user.lastName);
                 $('[name="e_email"]').val(user.email);
                 $('[name="e_age"]').val(user.age);
-                $('[name="e_password"]').val(user.password);
+                //$('[name="e_password"]').val(user.password);
 
                 $.each(user.roles, function(k,v){
                     $('[name="e_roles"]').find('option[value="'+v.id+'"]').prop('selected', 'selected');
