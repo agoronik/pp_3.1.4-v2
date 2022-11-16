@@ -4,6 +4,7 @@ import manager.mywebappspringboot.model.User;
 import manager.mywebappspringboot.repository.RoleRepository;
 import manager.mywebappspringboot.repository.UserRepository;
 import manager.mywebappspringboot.service.UserService;
+import manager.mywebappspringboot.service.UserServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -18,8 +19,11 @@ public class ApiController {
 
     @Autowired
     private UserRepository userRepository;
-    private UserService userService;
+
+    @Autowired
+    private UserServiceImp userService;
     private RoleRepository roleRepository;
+
 
     @GetMapping("/{id}")
     @ResponseBody
@@ -43,7 +47,7 @@ public class ApiController {
     @ResponseBody
     public String saveUser(@Validated @RequestBody User user, @PathVariable(value = "id") long id) {
         user.setId(id);
-        userRepository.save(user);
+        userService.updateUser(user);
         return "ok";
     }
 }

@@ -97,10 +97,12 @@ $(document).on('click', 'button.edit-user', function(){
 
     console.log(data);
 
-    fetch(request);
+    fetch(request)
+        .then(function(){
+            edit_obj_id = 0;
+            $('.modal').modal('hide');
+            initial_table();
+        });
 
-    edit_obj_id = 0;
-    $('.modal').modal('hide');
-    initial_table();
     return false;
 })

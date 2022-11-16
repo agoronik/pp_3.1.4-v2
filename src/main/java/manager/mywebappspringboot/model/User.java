@@ -2,7 +2,6 @@ package manager.mywebappspringboot.model;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -36,11 +35,12 @@ public class User implements UserDetails {
 
     public User() {}
 
-    public User(String firstName, String lastName, int age, String email) {
+    public User(String firstName, String lastName, int age, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
         this.email = email;
+        this.password = password;
     }
 
     public Long getId() {
@@ -98,10 +98,7 @@ public class User implements UserDetails {
         return email;
     }
 
-    public void setPassword(String password) {
-        BCryptPasswordEncoder pw = new BCryptPasswordEncoder();
-        this.password = pw.encode(password);
-    }
+    public void setPassword(String password) { this.password = password; }
 
     public Set<Role> getRoles() {
         return roles;
